@@ -1,0 +1,20 @@
+{
+    "name": "codenamegary/l4-utils",
+    "description": "A collection of utilities for use with Laravel 4.",
+    "require": {
+        "laravel/framework": "4.2~"
+    },
+    "license": "MIT",
+    "autoload": {
+    	"psr-4": {
+    		"codenamegary\\L4Utils\\": "src/"
+    	}
+    },
+    "authors": [
+        {
+            "name": "Gary Saunders",
+            "email": "gary@codenamegary.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
