@@ -79,5 +79,15 @@ abstract class EloquentRepository implements Repository {
         $model->save();
         return $model;
     }
+	
+	/**
+	 * @return Illuminate\Database\Eloquent\Builder
+	 */
+	public function filter(callback $callback, $query = null)
+	{
+		if(!$query) $query = $this->newQuery();
+		$callback($query);
+		return $query;
+	}
 
 }
