@@ -2,7 +2,7 @@
     "name": "codenamegary/l4-utils",
     "description": "A collection of utilities for use with Laravel 4.2",
     "require": {
-        "laravel/framework": "4.2~"
+        "laravel/framework": "4.2.*"
     },
     "license": "MIT",
     "autoload": {
