@@ -14,29 +14,27 @@ abstract class EloquentRepository implements Repository {
 
     /**
      * @return Illuminate\Database\Eloquent\Builder
-     */    
+     */
     public function newQuery()
     {
         return $this->getModel()->newQuery();
     }
-    
+
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
     public function get($id, array $related = array())
     {
-        return $this->newQuery()
-            ->with($related)
-            ->where('id', $id)
-            ->first();
+        return $this->newQuery()->with($related)->where('id', $id)->first();
     }
-    
+
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
     public function update($id, array $data = array())
     {
-        if(!$model = $this->get($id)) throw new Exception('ERROR: Cannot update record with id ' . $id . ', does not exist.');
+        if (!$model = $this->get($id))
+            throw new Exception('ERROR: Cannot update record with id ' . $id . ', does not exist.');
         $model->fill($data);
         $this->save($model);
         return $model;
@@ -51,17 +49,18 @@ abstract class EloquentRepository implements Repository {
         $this->save($model);
         return $model;
     }
-    
+
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
     public function delete($id)
     {
-        if(!$model = $this->get($id)) throw new Exception('ERROR: Cannot delete record with id ' . $id . ', does not exist.');
+        if (!$model = $this->get($id))
+            throw new Exception('ERROR: Cannot delete record with id ' . $id . ', does not exist.');
         $model->delete();
         return $model;
     }
-    
+
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
@@ -80,5 +79,5 @@ abstract class EloquentRepository implements Repository {
         $model->save();
         return $model;
     }
-    
+
 }
