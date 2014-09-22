@@ -6,8 +6,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Contracts\MessageProviderInterface;
 use Validator;
 
-abstract class Validator implements MessageProviderInterface
-{
+abstract class Validator implements MessageProviderInterface {
 
     /**
      * @var Illuminate\Support\MessageBag
@@ -23,7 +22,7 @@ abstract class Validator implements MessageProviderInterface
      * @var array
      */
     protected $input;
-    
+
     /**
      * @param $modelId  integer
      */
@@ -55,20 +54,21 @@ abstract class Validator implements MessageProviderInterface
     }
 
     /**
-     * Overwrite this function to return custom messages you want the validator to use.
-     * 
+     * Overwrite this function to return custom messages you want the validator
+     * to use.
+     *
      *     Reference: http://laravel.com/docs/validation#custom-error-messages
-     * 
+     *
      * @return array
      */
     public function getMessages()
     {
         return array();
     }
-        
+
     /**
      * Run the validator, return true or false for success / fail.
-     * 
+     *
      * @return boolean
      */
     public function validates()
@@ -80,19 +80,20 @@ abstract class Validator implements MessageProviderInterface
         $this->errors = $validation->messages();
         return false;
     }
-    
+
     /**
      * Runs the validator, returns true or false for fail / success.
-     * 
+     *
      * @return boolean
      */
     public function fails()
     {
         return !$this->validates();
     }
-    
+
     /**
-     * Just executes the validator so that you can check the validation output manually.
+     * Just executes the validator so that you can check the validation output
+     * manually.
      */
     public function run()
     {
@@ -123,7 +124,7 @@ abstract class Validator implements MessageProviderInterface
     {
         $this->modelId = $arg;
     }
-    
+
     /**
      * @return integer
      */
