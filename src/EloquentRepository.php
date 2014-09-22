@@ -83,7 +83,7 @@ abstract class EloquentRepository implements Repository {
 	/**
 	 * @return Illuminate\Database\Eloquent\Builder
 	 */
-	public function filter(callback $callback, $query = null)
+	public function filter(callable $callback, $query = null)
 	{
 		if(!$query) $query = $this->newQuery();
 		$callback($query);
