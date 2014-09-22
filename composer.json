@@ -1,6 +1,6 @@
 {
     "name": "codenamegary/l4-utils",
-    "description": "A collection of utilities for use with Laravel 4.",
+    "description": "A collection of utilities for use with Laravel 4.2",
     "require": {
         "laravel/framework": "4.2~"
     },
