@@ -132,5 +132,13 @@ abstract class Validator implements MessageProviderInterface {
     {
         return $this->modelId;
     }
+    
+    /**
+     * @return Illuminate\Support\MessageBag
+     */
+    public function getMessageBag()
+    {
+        return $this->getErrors();
+    }
 
 }
