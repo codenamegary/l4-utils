@@ -53,10 +53,10 @@ abstract class EloquentRepository implements Repository {
     /**
      * @return Illuminate\Database\Eloquent\Model
      */
-    public function delete($id)
+    public function destroy($id)
     {
         if (!$model = $this->get($id))
-            throw new Exception('ERROR: Cannot delete record with id ' . $id . ', does not exist.');
+            throw new Exception('ERROR: Cannot destroy record with id ' . $id . ', does not exist.');
         $model->delete();
         return $model;
     }
