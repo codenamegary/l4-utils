@@ -4,7 +4,7 @@ namespace codenamegary\L4Utils;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Contracts\MessageProviderInterface;
-use Validator;
+use Validator as BaseValidator;
 
 abstract class Validator implements MessageProviderInterface {
 
@@ -74,7 +74,7 @@ abstract class Validator implements MessageProviderInterface {
     public function validates()
     {
         $this->errors = new MessageBag;
-        $validation = Validator::make($this->getInput(), $this->getRules(), $this->getMessages());
+        $validation = BaseValidator::make($this->getInput(), $this->getRules(), $this->getMessages());
         if ($validation->passes())
             return true;
         $this->errors = $validation->messages();
