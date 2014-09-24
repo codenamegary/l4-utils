@@ -30,7 +30,7 @@ class Presenter {
      */
     public function setData($data = null)
     {
-        if(!is_null($data) &&!is_array($data) &&!is_object($data))
+        if(!is_null($data) && !is_array($data) && !is_object($data))
             throw new InvalidArgumentException('Presenter: $data must be null, object or array.');
         $this->data = $data;
     }
@@ -50,6 +50,13 @@ class Presenter {
      */
     public function get($name, $default = false)
     {
+        if(null !== $value = $this->getLocalData($name, null))
+            return $value;
+        return $this->getRaw($name, $default);
+    }
+
+    public function getRaw($name, $default = false)
+    {
         $dataType = gettype($this->data);
         $handlerMethod = 'get' . ucfirst($dataType) . 'Data';
         return $this->$handlerMethod($name, $default);
@@ -67,9 +74,16 @@ class Presenter {
         return $this->get($name, false);
     }
 
+    /**
+     * Takes missing method calls and attempts to execute them based on the data object.
+     * 
+     * @param string $name      Name of the function being called
+     * @param array $arguments  Array of arguments being passed to the function.
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
-        if(is_object($this->data) &&method_exists($this->data, $name))
+        if(is_object($this->data) && method_exists($this->data, $name))
             return call_user_func_array(array($this->data, $name), $arguments);
         throw new Exception('Presenter: No such function exists on the presenter or data (' . $name . ')');
     }
@@ -84,9 +98,6 @@ class Presenter {
      */
     protected function getNULLData($name, $default)
     {
-        $methodName = "get" . ucfirst($name);
-        if(method_exists($this, $methodName))
-            return $this->$methodName();
         return $default;
     }
 
@@ -104,8 +115,6 @@ class Presenter {
         if(!is_object($this->data))
             throw new Exception('Presenter: Attempted to getObjectData() but $presenter->data is not an object.');
         $methodName = "get" . ucfirst($name);
-        if(method_exists($this, $methodName))
-            return $this->$methodName();
         if(method_exists($this->data, $methodName))
             return $this->data->$methodName();
         if(property_exists($this->data, $name))
@@ -126,11 +135,23 @@ class Presenter {
     {
         if(!is_array($this->data))
             throw new Exception('Presenter: Attempted to getArrayData() but $presenter->data is not an array.');
+        if(array_key_exists($name, $this->data))
+            return $this->data[$name];
+        return $default;
+    }
+
+    /**
+     * If a property is overriden by a method on this presenter, return it.
+     *
+     * @param string $name
+     * @param string $default
+     * @return mixed
+     */
+    protected function getLocalData($name, $default)
+    {
         $methodName = "get" . ucfirst($name);
         if(method_exists($this, $methodName))
             return $this->$methodName();
-        if(array_key_exists($name, $this->data))
-            return $this->data[$name];
         return $default;
     }
 
