@@ -12,7 +12,7 @@ interface Repository {
 
     public function create(array $data);
 
-    public function delete($id);
+    public function destroy($id);
 
     public function make(array $data = array());
 
