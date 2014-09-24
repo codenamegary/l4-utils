@@ -119,6 +119,12 @@ class Presenter {
             return $this->data->$methodName();
         if(property_exists($this->data, $name))
             return $this->data->$name;
+        try {
+            $value = $this->data->$name;
+            return $value;
+        } catch(Exception $e) {
+            return $default;
+        }
         return $default;
     }
 
