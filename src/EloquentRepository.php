@@ -33,7 +33,7 @@ abstract class EloquentRepository implements Repository {
      */
     public function update($id, array $data = array())
     {
-        if (!$model = $this->get($id))
+        if(!$model = $this->get($id))
             throw new Exception('ERROR: Cannot update record with id ' . $id . ', does not exist.');
         $model->fill($data);
         $this->save($model);
@@ -55,7 +55,7 @@ abstract class EloquentRepository implements Repository {
      */
     public function destroy($id)
     {
-        if (!$model = $this->get($id))
+        if(!$model = $this->get($id))
             throw new Exception('ERROR: Cannot destroy record with id ' . $id . ', does not exist.');
         $model->delete();
         return $model;
@@ -79,15 +79,16 @@ abstract class EloquentRepository implements Repository {
         $model->save();
         return $model;
     }
-	
-	/**
-	 * @return Illuminate\Database\Eloquent\Builder
-	 */
-	public function filter(callable $callback, $query = null)
-	{
-		if(!$query) $query = $this->newQuery();
-		$callback($query);
-		return $query;
-	}
+
+    /**
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function filter(callable $callback, $query = null)
+    {
+        if(!$query)
+            $query = $this->newQuery();
+        $callback($query);
+        return $query;
+    }
 
 }
