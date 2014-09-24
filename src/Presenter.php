@@ -114,7 +114,7 @@ class Presenter {
     {
         if(!is_object($this->data))
             throw new Exception('Presenter: Attempted to getObjectData() but $presenter->data is not an object.');
-        $methodName = "get" . ucfirst($name);
+        $methodName = $this->getMethodName($name);
         if(method_exists($this->data, $methodName))
             return $this->data->$methodName();
         if(property_exists($this->data, $name))
@@ -149,10 +149,23 @@ class Presenter {
      */
     protected function getLocalData($name, $default)
     {
-        $methodName = "get" . ucfirst($name);
+        $methodName = $this->getMethodName($name);
         if(method_exists($this, $methodName))
             return $this->$methodName();
         return $default;
+    }
+    
+    /**
+     * Translates a property name into a method name for use elsewhere.
+     * 
+     * @param string $name
+     * @return string
+     */
+    protected function getMethodName($name)
+    {
+        $name = str_replace('_', '', $name);
+        $methodName = "get" . ucfirst($name);
+        return $methodName;
     }
 
 }
